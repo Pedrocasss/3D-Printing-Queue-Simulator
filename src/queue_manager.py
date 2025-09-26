@@ -42,9 +42,9 @@ if __name__ == "__main__":
     
     queue = JobQueue()
 
-    job1 = Job("JOB1", "Plastic 1", 60, 2)   
-    job2 = Job("JOBB2", "Plastic 2", 90, 1)    
-    job3 = Job("JOBB3", "Plastic 2", 45, 3)   
+    job1 = Job("JOB1", "Plastic 1", 60, 1)
+    job2 = Job("JOBB2", "Plastic 2", 20, 1) 
+    job3 = Job("JOBB3", "Plastic 2", 45, 3)
 
     queue.add_job(job1)
     queue.add_job(job2)
