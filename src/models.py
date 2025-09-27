@@ -13,6 +13,7 @@ class Job:
         self.status = 'queued'
         self.started_at = None
         self.completed_at = None
+        self.order_counter = 0
 
     def start_printing(self):
         self.status = 'started'
@@ -86,7 +87,7 @@ if __name__ == "__main__":
     
 
     printer1.complete_job()
-    
+
     print(f"After completing job: {printer1}")
     print(f"Jobs completed: {printer1.total_jobs_completed}")
     print(f"Total busy time: {printer1.total_busy_time:.2f}s")

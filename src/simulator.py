@@ -230,7 +230,7 @@ class PrinterSimulator:
             }
             job_reports.append(job_report)
         
-        job_reports.sort(key=lambda x: x['created_at'])
+        job_reports.sort(key=lambda x: x['started_at'] or 0)
         
         return {
             'jobs': job_reports,

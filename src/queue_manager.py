@@ -7,9 +7,12 @@ class JobQueue:
         self.jobs = []
         self._lock = threading.Lock()
         self._auto_sort = True
+        self.counter = 0
     
     def add_job(self, job):
         with self._lock:
+            self.counter += 1
+            job.order_counter = self.counter
             self.jobs.append(job)
             if self._auto_sort:
                 self._sort_by_priority_unsafe()
@@ -18,6 +21,8 @@ class JobQueue:
     def get_next_job(self):
         with self._lock:
             if self.jobs:
+                # Re-sort before getting next job to ensure consistency
+                self._sort_by_priority_unsafe()
                 job = self.jobs.pop(0)
                 print(f"Job {job.id} removed from queue.")
                 return job
@@ -30,7 +35,7 @@ class JobQueue:
             self._sort_by_priority_unsafe()
 
     def _sort_by_priority_unsafe(self):
-        self.jobs.sort(key=lambda job: (job.priority, job.created_at))
+        self.jobs.sort(key=lambda job: (job.priority, job.order_counter))
     
 
     def list_jobs(self):
