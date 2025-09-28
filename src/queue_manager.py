@@ -21,7 +21,6 @@ class JobQueue:
     def get_next_job(self):
         with self._lock:
             if self.jobs:
-                # Re-sort before getting next job to ensure consistency
                 self._sort_by_priority_unsafe()
                 job = self.jobs.pop(0)
                 print(f"Job {job.id} removed from queue.")

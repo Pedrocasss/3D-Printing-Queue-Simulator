@@ -156,8 +156,20 @@ class PrinterSimulator:
             }
     
     def _calculate_metrics(self) -> Dict:
+
+        metrics = {
+            'total_jobs': len(self.all_jobs),
+            'completed_jobs': len(self.completed_jobs),
+            'cancelled_jobs': len(self.cancelled_jobs),
+            'simulation_duration_seconds': 0,
+            'time_scale_factor': self.time_scale
+        }
+
+        if self.simulation_start_time and self.simulation_end_time:
+            metrics['simulation_duration_seconds'] = self.simulation_end_time - self.simulation_start_time
+        
         if not self.completed_jobs:
-            return {}
+            return metrics
         
         wait_times = []
         run_times = []
@@ -165,57 +177,58 @@ class PrinterSimulator:
         for job in self.completed_jobs:
             wait_time = job.get_wait_time()
             run_time = job.get_run_time()
+            
             if wait_time is not None:
                 wait_times.append(wait_time)
             if run_time is not None:
                 run_times.append(run_time)
         
-        sim_duration = 0
-        if self.simulation_start_time and self.simulation_end_time:
-            sim_duration = self.simulation_end_time - self.simulation_start_time
-        
-        metrics = {
-            'total_jobs': len(self.all_jobs),
-            'completed_jobs': len(self.completed_jobs),
-            'cancelled_jobs': len(self.cancelled_jobs),
-            'simulation_duration_seconds': sim_duration,
-            'time_scale_factor': self.time_scale
-        }
-        
+
         if wait_times:
-            metrics.update({
-                'avg_wait_time': sum(wait_times) / len(wait_times),
-                'median_wait_time': sorted(wait_times)[len(wait_times) // 2],
-                'max_wait_time': max(wait_times),
-                'min_wait_time': min(wait_times)
-            })
+            metrics['avg_wait_time'] = sum(wait_times) / len(wait_times)
+            metrics['median_wait_time'] = sorted(wait_times)[len(wait_times) // 2]
+            metrics['max_wait_time'] = max(wait_times)
+            metrics['min_wait_time'] = min(wait_times)
         
+ 
         if run_times:
             metrics['avg_run_time'] = sum(run_times) / len(run_times)
+            metrics['total_processing_time'] = sum(run_times)
         
-        if sim_duration > 0:
-            metrics['throughput_jobs_per_second'] = len(self.completed_jobs) / sim_duration
+        if metrics['simulation_duration_seconds'] > 0:
+            metrics['throughput_jobs_per_second'] = len(self.completed_jobs) / metrics['simulation_duration_seconds']
         
         printer_utilization = {}
+        total_sim_time = metrics['simulation_duration_seconds']
+        
         for printer in self.printers:
-            if sim_duration > 0:
-                utilization = printer.total_busy_time / sim_duration
-            else:
-                utilization = 0
+            utilization_pct = 0
+            if total_sim_time > 0:
+                utilization_pct = (printer.total_busy_time / total_sim_time) * 100
             
-            printer_utilization[f'printer_{printer.id}'] = {
+            printer_utilization[f'Printer-{printer.id}'] = {
+                'utilization_percentage': utilization_pct,
                 'jobs_completed': printer.total_jobs_completed,
-                'total_busy_time': printer.total_busy_time,
-                'utilization_percentage': utilization * 100
+                'total_busy_time': printer.total_busy_time
             }
         
         metrics['printer_utilization'] = printer_utilization
+        
+        if printer_utilization:
+            avg_utilization = sum(p['utilization_percentage'] for p in printer_utilization.values()) / len(printer_utilization)
+            metrics['average_printer_utilization'] = avg_utilization
+        
         return metrics
-    
+
     def get_report(self) -> Dict:
         job_reports = []
         
         for job in self.all_jobs.values():
+            wait_time_real = job.get_wait_time()
+            run_time_real = job.get_run_time()
+            wait_time_scaled = wait_time_real * self.time_scale if wait_time_real else None
+            run_time_scaled = run_time_real * self.time_scale if run_time_real else None
+            
             job_report = {
                 'id': job.id,
                 'material': job.material,
@@ -225,12 +238,12 @@ class PrinterSimulator:
                 'created_at': job.created_at,
                 'started_at': job.started_at,
                 'completed_at': job.completed_at,
-                'wait_time': job.get_wait_time(),
-                'run_time': job.get_run_time()
+                'wait_time': wait_time_scaled,  
+                'run_time': run_time_scaled,
+                'wait_time_real': wait_time_real,
+                'run_time_real': run_time_real
             }
             job_reports.append(job_report)
-        
-        job_reports.sort(key=lambda x: x['started_at'] or 0)
         
         return {
             'jobs': job_reports,
