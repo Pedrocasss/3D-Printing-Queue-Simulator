@@ -99,7 +99,6 @@ class SimplePrinterCLI:
                 print(f"  {i}. {job['id']} - {job['material']} - {job['est_time']}s - Priority: {job['priority']} ({priority_name})")
     
     def cancel_job(self, job_id: str):
-        """Cancel a specific job"""
         job_found = False
         for job in self.jobs_data:
             if job['id'] == job_id:
@@ -118,7 +117,6 @@ class SimplePrinterCLI:
             return False
     
     def run_simulation(self, save_report: bool = True):
-        """Run simulation and generate report"""
         if not self.jobs_data:
             print("No jobs to process")
             return
