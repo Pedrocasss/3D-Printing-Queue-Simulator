@@ -1,0 +1,119 @@
+{
+  "jobs": [
+    {
+      "id": "job-001",
+      "material": "PLA",
+      "est_time": 120.0,
+      "priority": 1,
+      "status": "completed",
+      "created_at": 1759446130.8210154,
+      "started_at": 1759446160.144731,
+      "completed_at": 1759446161.3450165,
+      "wait_time": 0.29323715686798096,
+      "run_time": 0.012002854347229005,
+      "wait_time_real": 29.323715686798096,
+      "run_time_real": 1.2002854347229004
+    },
+    {
+      "id": "job-002",
+      "material": "ABS",
+      "est_time": 180.0,
+      "priority": 2,
+      "status": "completed",
+      "created_at": 1759446130.8211813,
+      "started_at": 1759446162.2454782,
+      "completed_at": 1759446164.046239,
+      "wait_time": 0.31424296855926515,
+      "run_time": 0.018007607460021974,
+      "wait_time_real": 31.424296855926514,
+      "run_time_real": 1.8007607460021973
+    },
+    {
+      "id": "job-003",
+      "material": "PETG",
+      "est_time": 150.0,
+      "priority": 1,
+      "status": "completed",
+      "created_at": 1759446130.8213115,
+      "started_at": 1759446160.144967,
+      "completed_at": 1759446161.6453378,
+      "wait_time": 0.2932365560531616,
+      "run_time": 0.01500370740890503,
+      "wait_time_real": 29.323655605316162,
+      "run_time_real": 1.500370740890503
+    },
+    {
+      "id": "job-004",
+      "material": "TPU",
+      "est_time": 200.0,
+      "priority": 3,
+      "status": "completed",
+      "created_at": 1759446130.8256934,
+      "started_at": 1759446162.8456411,
+      "completed_at": 1759446164.8459804,
+      "wait_time": 0.3201994776725769,
+      "run_time": 0.020003392696380615,
+      "wait_time_real": 32.01994776725769,
+      "run_time_real": 2.0003392696380615
+    },
+    {
+      "id": "job-005",
+      "material": "PLA",
+      "est_time": 90.0,
+      "priority": 1,
+      "status": "completed",
+      "created_at": 1759446130.8262856,
+      "started_at": 1759446161.3450878,
+      "completed_at": 1759446162.2453785,
+      "wait_time": 0.3051880216598511,
+      "run_time": 0.009002907276153565,
+      "wait_time_real": 30.518802165985107,
+      "run_time_real": 0.9002907276153564
+    },
+    {
+      "id": "job1",
+      "material": "PLA",
+      "est_time": 120.0,
+      "priority": 1,
+      "status": "completed",
+      "created_at": 1759446148.0592806,
+      "started_at": 1759446161.6454248,
+      "completed_at": 1759446162.8455672,
+      "wait_time": 0.13586144208908082,
+      "run_time": 0.012001423835754395,
+      "wait_time_real": 13.586144208908081,
+      "run_time_real": 1.2001423835754395
+    }
+  ],
+  "metrics": {
+    "total_jobs": 6,
+    "completed_jobs": 6,
+    "cancelled_jobs": 0,
+    "simulation_duration_seconds": 4.810120344161987,
+    "time_scale_factor": 0.01,
+    "avg_wait_time": 27.699427048365276,
+    "median_wait_time": 30.518802165985107,
+    "max_wait_time": 32.01994776725769,
+    "min_wait_time": 13.586144208908081,
+    "avg_run_time": 1.4336982170740764,
+    "total_processing_time": 8.602189302444458,
+    "throughput_jobs_per_second": 1.247370038731393,
+    "printer_utilization": {
+      "Printer-0": {
+        "utilization_percentage": 81.10684617434742,
+        "jobs_completed": 3,
+        "total_busy_time": 3.901336908340454
+      },
+      "Printer-1": {
+        "utilization_percentage": 97.72837388173456,
+        "jobs_completed": 3,
+        "total_busy_time": 4.700852394104004
+      }
+    },
+    "average_printer_utilization": 89.417610028041
+  },
+  "simulation_config": {
+    "num_printers": 2,
+    "time_scale": 0.01
+  }
+}

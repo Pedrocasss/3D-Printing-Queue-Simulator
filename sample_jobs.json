@@ -1,0 +1,32 @@
+[
+  {
+    "id": "job-001",
+    "material": "PLA",
+    "est_time": 120.0,
+    "priority": 1
+  },
+  {
+    "id": "job-002",
+    "material": "ABS",
+    "est_time": 180.0,
+    "priority": 2
+  },
+  {
+    "id": "job-003",
+    "material": "PETG",
+    "est_time": 150.0,
+    "priority": 1
+  },
+  {
+    "id": "job-004",
+    "material": "TPU",
+    "est_time": 200.0,
+    "priority": 3
+  },
+  {
+    "id": "job-005",
+    "material": "PLA",
+    "est_time": 90.0,
+    "priority": 1
+  }
+]
