@@ -14,7 +14,6 @@ def test_priority_order():
     sim.run_until_complete()
 
     report = sim.get_report()
-    # ordenar pela hora de início, não pela de conclusão
     started_order = sorted(
         [j for j in report['jobs'] if j['status'] == "completed"],
         key=lambda x: x['started_at']
